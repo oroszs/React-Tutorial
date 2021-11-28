@@ -60,6 +60,7 @@ class Game extends React.Component {
       moveCoords: [''],
       xIsNext: true,
       stepNumber: 0,
+      selectedStep: null,
     }
   }
 
@@ -67,6 +68,7 @@ class Game extends React.Component {
     this.setState({
       stepNumber: step,
       xIsNext: (step % 2) === 0,
+      selectedStep: step,
     });
   }
 
@@ -100,9 +102,14 @@ class Game extends React.Component {
       const desc = move ?
       `Go to Move #${move}: (${moveCoords[move]})` :
       `Go to Game Start`;
+      let selected = (this.state.stepNumber === this.state.selectedStep && move === this.state.selectedStep);
       return(
         <li key={move}>
-          <button onClick={() => this.jumpTo(move)}>{desc}</button>
+          <button
+            onClick={() => this.jumpTo(move)}
+            style={selected ? {fontWeight: 'bold'} : {fontWeight: 'normal'}}>
+            {desc}
+          </button>
         </li>
       );
     });
