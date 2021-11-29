@@ -3,12 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 
 function Square (props){
-  let color;
-  if(props.winningSquare){
-    color = props.winningSquare ? 'green' : 'white';
-  } else {
-    color = 'white';
-  }
+  let color = props.winningSquare ? 'green' : 'white';
   if(props.draw){
     color = 'yellow';
   }
