@@ -9,6 +9,9 @@ function Square (props){
   } else {
     color = 'white';
   }
+  if(props.draw){
+    color = 'yellow';
+  }
   return (
     <button
     className="square"
@@ -28,6 +31,7 @@ class Board extends React.Component {
         value={this.props.squares[i]}
         onClick={() => this.props.onClick(i)}
         winningSquare={this.props.line ? this.props.line.includes(i) : null}
+        draw={this.props.draw}
       />
     );
   }
@@ -152,10 +156,15 @@ class Game extends React.Component {
     });
 
     let status;
+    let draw = undefined;
     if (winner) {
       status = `Winner: ${winner}`;
+    } else if (this.state.stepNumber === this.state.history[0].squares.length) {
+      status = `Draw`;
+      draw = true;
     } else {
       status = `Next Player: ${this.state.xIsNext ? 'X' : 'O'}`;
+      draw = undefined;
     }
     return (
       <div className="game">
@@ -164,6 +173,7 @@ class Game extends React.Component {
           squares={current.squares}
           onClick={(i) => this.handleClick(i)}
           line={winningLine}
+          draw={draw}
           />
         </div>
         <div className="game-info">
