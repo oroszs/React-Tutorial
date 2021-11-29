@@ -75,6 +75,7 @@ class Game extends React.Component {
       xIsNext: true,
       stepNumber: 0,
       selectedStep: null,
+      reverse: false,
     }
   }
 
@@ -83,6 +84,12 @@ class Game extends React.Component {
       stepNumber: step,
       xIsNext: (step % 2) === 0,
       selectedStep: step,
+    });
+  }
+
+  toggle() {
+    this.setState({
+      reverse: !this.state.reverse,
     });
   }
 
@@ -111,7 +118,6 @@ class Game extends React.Component {
     const current = history[this.state.stepNumber];
     const winner = calculateWinner(current.squares);
     const moveCoords = this.state.moveCoords;
-    let reverse = false;
 
     const moves = history.map((step, move) => {
       const desc = move ?
@@ -145,7 +151,8 @@ class Game extends React.Component {
         </div>
         <div className="game-info">
           <div>{status}</div>
-          <ol>{moves}</ol>
+          <button onClick={() => this.toggle()}>Ascending / Descending</button>
+          <ol>{this.state.reverse ? moves.reverse() : moves}</ol>
         </div>
       </div>
     );
